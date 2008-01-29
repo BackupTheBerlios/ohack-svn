@@ -1,0 +1,170 @@
+AC_INIT(src/medusa.c)
+AM_CONFIG_HEADER(config.h)
+
+dnl Detect the canonical host and target build environment
+AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
+
+AM_INIT_AUTOMAKE(medusa, 1.3)
+
+AC_LANG_C
+AC_PROG_CC
+
+AC_HEADER_STDC
+
+CFLAGS="${CFLAGS=}"
+AC_MSG_CHECKING(whether to enable debugging)
+debug_default="yes"
+AC_ARG_ENABLE(debug, [  --enable-debug=[no/yes] turn on debugging (default=yes)],, enable_debug=$debug_default)
+if test "x$enable_debug" = "xyes"; then
+  CFLAGS="$CFLAGS -g -DDEBUG"
+  AC_MSG_RESULT(yes)
+else
+  AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING(whether to enable untested modules)
+untested_default="no"
+AC_ARG_ENABLE(untested, [  --enable-untested=[no/yes] Enabled untested modules (default=no)],, enable_untested=$untested_default)
+AM_CONDITIONAL(BUILD_UNTESTED, test "x$enable_untested" = "xyes")
+if test "x$enable_untested" = "xyes"; then
+  AC_MSG_RESULT(yes)
+else
+  AC_MSG_RESULT(no)
+fi
+
+dnl FreeBSD was not looking in /usr/local...
+if test -d "/usr/local/lib"
+  then LDFLAGS="$LDFLAGS -L/usr/local/lib"
+fi
+if test -d "/usr/local/ssl/lib"
+  then LDFLAGS="$LDFLAGS -L/usr/local/ssl/lib"
+fi
+
+CFLAGS="$CFLAGS -fPIC"
+CFLAGS="$CFLAGS -I/usr/local/include -I/usr/local/ssl/include -I/usr/include/subversion-1 -I/usr/local/include/subversion-1 \
+-I/usr/include/apr-0 -I/usr/local/include/apr-1 -I/usr/include/postgresql -I/usr/local/include/postgresql"
+
+AC_CHECKING([for pthread support])
+AC_CHECK_LIB(pthread, main, [], [AC_MSG_ERROR([ *** Application requires pthread support *** ])])
+
+AC_CHECKING([for OpenSSL Library and Header files])
+AC_CHECK_LIB(crypto, CRYPTO_lock, [], [AC_MSG_WARN([ *** LibCrypto may be required for *BSD ***])])
+AC_CHECK_HEADER([openssl/ssl.h], 
+  [AC_CHECK_LIB(ssl, main,
+    [],
+    [AC_MSG_WARN([ *** OpenSSL library required for SSL support. *** ])]
+  )],
+  [AC_MSG_WARN([ *** OpenSSL header files required for SSL support. *** ])]
+)
+
+AC_CHECKING([for PostgreSQL Library files])
+AC_CHECK_LIB(pq, main, [], [AC_MSG_WARN([ *** LIBPQ required for PostgreSQL module. *** ])])
+
+AC_CHECKING([for Libssh2 Library files])
+AC_CHECK_LIB(ssh2, main, [], [AC_MSG_WARN([ *** Libssh2 required for SSH2 module. ***
+
+  Libssh2 (http://www.libssh2.org) is not the same as libssh (http://0xbadc0de.be).
+  Make sure you have the correct library. The SSH2 module will NOT be built.
+
+  ])]
+)
+
+AC_CHECKING([for NCPFS Library and Header files])
+dnl [AC_DEFINE(HAVE_LIBNCP, 1, [Enabling NCP Module.])],
+AC_CHECK_HEADER([ncp/nwcalls.h], 
+  [AC_CHECK_LIB(ncp, main,
+    [],
+    [AC_MSG_WARN([ *** NCPFS library required for NCP module. ***
+      
+      The NCPFS package must be installed for NCP module to function. This includes
+      both the library and header files. If your distribution does not include these
+      files or offer a ncpfs-devel package, the files can be manually installed using 
+      "make install-dev" within the NCPFS source. The NCP module will NOT be built.
+
+    ])]
+  )],
+  [AC_MSG_WARN([ *** NCPFS header files required for NCP module. ***
+    
+    The NCPFS package must be installed for NCP module to function. This includes
+    both the library and header files. If your distribution does not include these
+    files or offer a ncpfs-devel package, the files can be manually installed using 
+    "make install-dev" within the NCPFS source. The NCP module will NOT be built.
+  
+  ])]
+)
+
+AC_CHECKING([for Subversion Library and Header files])
+AC_CHECK_HEADER([apr-0/apr_tables.h], 
+  [AC_CHECK_LIB(svn_client-1, main,
+    [],
+    [AC_MSG_WARN([ *** LIBSVN library required for SVN module. *** ])]
+  )],
+  [AC_MSG_WARN([ *** APR-0 required for SVN module. ***
+    
+    This module currently requires APR-0 and does not work with APR-1. All 
+    development/testing was done using Subversion 1.3.2/APR-0.
+  
+  ])]
+)
+
+AC_CHECK_FUNCS(strcasestr)
+
+dnl -lm --> mysql/floor(), http/log()
+
+case "$target" in
+  *linux*)
+    LIBDL="-ldl"
+    RDYNAMIC="-rdynamic"
+    MODULE_LDFLAGS="-shared -lm"
+    EXTRA_LIBS=""
+    ;;
+  *freebsd*)
+    LIBDL=""
+    RDYNAMIC="-rdynamic"
+    MODULE_LDFLAGS="-shared -lm"
+    EXTRA_LIBS=""
+    ;;
+  *openbsd*)
+    LIBDL=""
+    RDYNAMIC="-rdynamic"
+    MODULE_LDFLAGS="-shared -lm"
+    EXTRA_LIBS="-g -Wl,-E"
+    ;;
+  *apple-darwin*)
+    LIBDL="-ldl"
+    RDYNAMIC=""
+    MODULE_LDFLAGS="-bundle -flat_namespace -undefined suppress"
+    EXTRA_LIBS=""
+    ;;
+  *solaris*)
+    LIBDL="-ldl"
+    RDYNAMIC="-Rdynamic"
+    EXTRA_LIBS="-lnsl -lsocket"
+    MODULE_LDFLAGS="-G"
+    AC_DEFINE(INADDR_NONE,"((unsigned long) -1)","Solaris doesn't seem to define INADDR_NONE")
+    ;;
+  *cygwin*)
+    LIBDL="-ldl"
+    RDYNAMIC=""
+    EXTRA_LIBS="-DCYGWIN"
+    MODULE_LDFLAGS="-shared"
+    AC_DEFINE(INET_ADDRSTRLEN,16,"Cygwin doesn't seem to define INET_ADDRSTRLEN")
+    ;;
+  *)
+    LIBDL="-ldl"
+    RDYNAMIC="-rdynamic"
+    MODULE_LDFLAGS="-shared -lm"
+    EXTRA_LIBS=""
+    ;;
+esac
+
+AC_SUBST([MODULE_LDFLAGS])
+LDFLAGS="$LDFLAGS $RDYNAMIC $LIBDL $EXTRA_LIBS"
+
+_default_mod_path="/usr/local/lib/medusa/modules"
+AC_ARG_WITH(default-mod-path, AC_HELP_STRING([--with-default-mod-path=path], [Location of medusa module files (default = /usr/local/lib/medusa/modules)]),[_default_mod_path="$withval"])
+AC_DEFINE_UNQUOTED(DEFAULT_MOD_PATH, "$_default_mod_path", [Location of medusa module files])
+AC_SUBST(default-mod-path)
+
+AC_OUTPUT(Makefile src/Makefile src/modsrc/Makefile)

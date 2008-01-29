@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/home/andresete/WorkSpace/OHackSuite/OIcons" >
+        <file>JOhnICons/!.png</file>
+        <file>JOhnICons/gnu.png</file>
+    </qresource>
+</RCC>

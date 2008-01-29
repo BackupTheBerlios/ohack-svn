@@ -1,0 +1,107 @@
+================================================================
+Version 1.3
+================================================================
+
+Medusa Core Updates:
+  -Module listing fix for OpenBSD/AMD64
+  -Autoconf tweaks for NCP & SVN checks
+  -Autoconf tweaks for Solaris/OpenBSD
+  -Removed unnecessary IP address checks
+  -Other minor bug fixes
+
+================================================================
+Version 1.2
+================================================================
+
+Moved following modules to stable:
+  NCP, VNC, PostgreSQL, SVN, CVS, VmAuthd, SNMP
+
+Medusa Core Updates:
+  -Compile on x86_64, Mac OS X.
+  -Minor bug fixes.
+  -Modified license with OpenSSL GPL exemption.
+
+Module Updates:
+  SMBNT
+  -Added AS/400 target support.
+  -Global "-e" option now works with module "PASS:HASH".
+
+  FTP
+  -Modified response parsing code to support AS/400 brute-forcing.
+
+  REXEC
+  -Modified response parsing code.
+
+  Wrapper
+  -Added oracle script.
+  -Added SMB NULL session script.
+
+================================================================
+Version 1.1
+================================================================
+
+Added following modules (unstable): 
+  CVS, NCP, PostgreSQL, SMTP/VRFY, SNMP, SVN, VmAuthd, VNC
+
+Moved following modules to stable:
+  PcAnywhere, FTP, IMAP, RSH, REXEC, RLOGIN, and generic wrapper
+
+Medusa Core Updates:
+  -Display module list sorted alphabetically
+  -Compiles on OpenBSD
+  -Added delayed receive functions which allow the modules to specify the timeout
+   for both the initial socket read and the second "is any more data there?" check.
+  -Modified SSL connect function. The function now takes an already existing socket 
+   and switches it over to SSL. This is needed for modules like VMAUTHD.
+  -Major rework of network receive function. Original code was copied from Hydra and
+   seemed to have some issues.
+  
+Module Updates:
+  HTTP
+  -Added check for 301 error code (success)
+  -NTLM authentication support
+
+  IMAP
+  -Minor code cleanup
+
+  MySQL
+  -Added support for testing accounts without password
+
+  PcAnywhere
+  -Added sleep to deal with servers freaking out when attempts arrive too quickly
+
+  POP3
+  -Added AS/400 mode. Examines error codes to give us better information about 
+   account status.
+
+  SMBNT
+  -Added check to detect non-existent accounts when auditing an XP client
+
+  Telnet
+  -Moved receive functions to new delayed receive functions. This is slower, but
+   we should actually be able to brute devices with long logon banners now.
+
+  Wrapper
+  -Added support for scripts to pass error messages back to Medusa.
+
+Misc. Updates:
+  Rdesktop
+  -Added better success/failure detection
+  -Added support to detect various error messages
+  -Added basic W2K support
+  -Added basic OS detection
+  
+  Ebuilds
+  -Updated libssh2 ebuild based on bugs.gentoo.org feedback.
+  -Updated Medusa ebuild based on bugs.gentoo.org feedback.
+  -Updated Medusa version and added new module dependencies.
+  -Modified ncpfs ebuild for "install-dev" option.
+
+================================================================
+Version 1.0
+================================================================
+
+Initial release
+Modules (stable): HTTP, MS-SQL, SMBNT, SSHv2, Telnet, POP3 and MySQL
+Modules (unstable): RSH, RLOGIN, REXEC, FTP, IMAP, PcAnywhere, and generic wrapper
+

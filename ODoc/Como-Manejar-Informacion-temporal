@@ -1,0 +1,19 @@
+primero que todo lo mas importante es la variable de entorno OHACK que se refiere al diractorio donde esta instalado
+OHACKSUITE
+ 
+ 
+ Una vez con esta variable en el ambioente de trabajo los programas buscaran sus archivos de configuaracion en dichos directorios.
+ 
+ Los programas para cada usuario crearan una carpeta de trabajo en el home del usuaio NOTA: el home es dado por la variable de entorno $HOME y alli creara una carpeta escondida .OHack
+ ejemplo:
+ /home/andresete/.OHack
+ 
+ dentro de esta carpeta cada programa guardara su configuracion y archivos temporales ejemplo
+ OJohnGui Necesita  de OJohnCore Y ambosutilizan la carpeta
+ 
+ /home/andresete/.OHack/OJhon
+ 
+ Otro Ejemplo OBruteForceGui Y OBruteForceCore Guardan su configuracion en 
+ /home/andresete/.OHack/OBruteForce
+ 
+ asi la carpeta .OHack contendra cada una de los modulos de la suite

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="Generator" content="KWord HTML Export Filter Version 466447 " />
+<title>MODES.html</title>
+<style type="text/css">
+/* KWORD_CSS_EXPORT = 483471 */
+BODY
+{
+  background-color: #FFFFFF
+}
+.Standard
+{
+  text-indent:0pt; line-height:normal; text-shadow:none; font-family: 'Bitstream Vera Sans'; font-style: normal; font-weight: normal; font-size: 10pt; text-decoration: none; text-transform: none; font-variant:normal; 
+}
+@page
+{
+  size: 21.0cm 29.7cm;
+  margin-top: 42pt;
+  margin-left: 28pt;
+  margin-bottom: 42pt;
+  margin-right: 28pt;
+}
+</style>
+</head>
+<body>
+<p class="Standard" style="text-align:center; "><center>	<span style="font-weight: bold; font-size: 16pt; text-transform: none; font-variant:normal; ">John the Ripper's cracking modes.</span></center></p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">Mode descriptions here are short and only cover the basic things.</p>
+<p class="Standard" style="text-align:justify; ">Check other documentation files for information on customizing the</p>
+<p class="Standard" style="text-align:justify; ">modes.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:left; ">	<span style="font-weight: bold; font-size: 16pt; text-transform: none; font-variant:normal; ">Wordlist mode.</span></p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">This is the simplest cracking mode supported by John.  All you need to do is specify a wordlist (a text file containing one word per line) and some password files.  You can enable word mangling rules (which are used to modify or &quot;mangle&quot; words producing other likely passwords).  If enabled, all of the rules will be applied to every line in the wordlist file producing multiple candidate passwords from each source word.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">The wordlist should not contain duplicate lines.  John does not sort entries in the wordlist since that would consume a lot of resources and would prevent you from making John try the candidate passwords in</p>
+<p class="Standard" style="text-align:justify; ">the order that you define (with more likely candidate passwords listed first).  However, if you don't list your candidate passwords in a reasonable order, it'd be better if you sort the wordlist alphabetically: with some hash types, John runs a bit faster if each candidate password it tries only differs from the previous one by a few characters.  Most wordlists that you may find on the Net are already sorted anyway.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">On the other hand, if your wordlist is sorted alphabetically, you do not need to bother about some wordlist entries being longer than the maximum supported password length for the hash type you're cracking.</p>
+<p class="Standard" style="text-align:justify; ">To give an example, for traditional DES-based crypt(3) hashes only the first 8 characters of passwords are significant.  This means that if there are two or more candidate passwords in the wordlist whose first 8 characters are exactly the same, they're effectively the same 8 character long candidate password which only needs to be tried once.</p>
+<p class="Standard" style="text-align:justify; ">As long as the wordlist is sorted alphabetically, John is smart enough to handle this special case right.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">In fact, it is recommended that you do not truncate candidate passwords in your wordlist file since the rest of the characters (beyond the length limit of your target hash type) are likely still needed and make a difference if you enable word mangling rules.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">The recommended way to sort a wordlist for use with default wordlist</p>
+<p class="Standard" style="text-align:justify; ">rule set is:</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">	tr A-Z a-z &lt; SOURCE | sort -u &gt; TARGET</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">See RULES for information on writing your own wordlist rules.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">	<span style="font-weight: bold; font-size: 16pt; text-transform: none; font-variant:normal; ">&quot;Single crack&quot; mode.</span></p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">This is the mode you should start cracking with.  It will use the login names, &quot;GECOS&quot; / &quot;Full Name&quot; fields, and users' home directory names as candidate passwords, also with a large set of mangling rules applied.  Since the information is only used against passwords for the accounts it was taken from (and against password hashes which happened to be assigned the same salt), &quot;single crack&quot; mode is much faster than wordlist mode.  This permits for the use of a much larger set of word mangling rules with &quot;single crack&quot;, and their use is always enabled with this mode.  Successfully guessed passwords are also tried against all loaded password hashes just in case more users have the same password.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">Note that running this mode on many password files simultaneously may sometimes get more passwords cracked than it would if you ran it on the individual password files separately.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">	<span style="font-weight: bold; font-size: 16pt; text-transform: none; font-variant:normal; ">&quot;Incremental&quot; mode.</span></p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">This is the most powerful cracking mode, it can try all possible character combinations as passwords.  However, it is assumed that cracking with this mode will never terminate because of the number of combinations being too large (actually, it will terminate if you set a low password length limit or make it use a small charset), and you'll have to interrupt it earlier.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">That's one reason why this mode deals with trigraph frequencies, separately for each character position and for each password length, to crack as many passwords as possible within a limited time.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">To use the mode you need a specific definition for the mode's parameters, including password length limits and the charset to use. </p>
+<p class="Standard" style="text-align:justify; ">These parameters  are defined in the configuration file sections called [Incremental:MODE], where MODE is any name that you assign to the mode (it's the name that you will need to specify on John's command line).</p>
+<p class="Standard" style="text-align:justify; ">You can either use a pre-defined incremental mode definition (one of &quot;All&quot;, &quot;Alnum&quot;, &quot;Alpha&quot;, &quot;Digits&quot;, or &quot;LanMan&quot; for LM hashes) or define a custom one.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">See CONFIG and EXAMPLES for information on defining custom modes.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">	<span style="font-weight: bold; font-size: 16pt; text-transform: none; font-variant:normal; ">External mode.</span></p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">You can define an external cracking mode for use with John.  This is done with the configuration file sections called [List.External:MODE], where MODE is any name that you assign to the mode.  The section should contain program code of some functions that John will use to generate the candidate passwords it tries.  The functions are coded in</p>
+<p class="Standard" style="text-align:justify; ">a subset of C and are compiled by John at startup when you request the particular external mode on John's command line.  See EXTERNAL.</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">	<span style="font-weight: bold; font-size: 16pt; text-transform: none; font-variant:normal; ">What modes should I use?</span></p>
+<p class="Standard" style="text-align:justify; ">&nbsp;</p>
+<p class="Standard" style="text-align:justify; ">See EXAMPLES for a reasonable order of cracking modes to use.</p>
+</body>
+</html>

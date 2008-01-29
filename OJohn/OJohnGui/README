@@ -1,0 +1,6 @@
+john esta de modo suid prom lo tantonpuedo tratar de crackear el /etc/sahdow del sistema donde esta instalado !!!!!! 
+
+/*OJO importante*/
+
+-> Implementar cpulimit para toda la suid,
+esto me permite decir cuanta nice,mem cputime se quiere asignar y  a que usuario o grupo 

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/home/andresete/WorkSpace/OHackSuite/OJohn/OJohnGui/OUI/JOhnICons" >
+        <file>JOhnICons/BigO.png</file>
+    </qresource>
+</RCC>

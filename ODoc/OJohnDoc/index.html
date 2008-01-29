@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Linux)">
+	<META NAME="CREATED" CONTENT="20070704;15362000">
+	<META NAME="CHANGED" CONTENT="20070704;16433700">
+</HEAD>
+<BODY LANG="es-CO" DIR="LTR">
+<P ALIGN=CENTER><BR><BR>
+</P>
+<P ALIGN=CENTER>OjohnGui y OjohnCore</P>
+<P ALIGN=CENTER><BR><BR>
+</P>
+<P ALIGN=LEFT>Sobre OHackSuite:</P>
+<P ALIGN=LEFT>Es un proyecto iniciado en mayo de 2007 y planeado
+desde diciembre del 2006; nuestras metas  son coger gran cantidad de
+herramientas utilizada para probar la seguridad de los computadores y
+redes, uni&eacute;ndolas todas en una gran suite de trabajo llamado
+OHackSuite (Omar Hacking Suite) debido a su planeador  y
+desarrollador principal Omar Andres Zapata,</P>
+<P ALIGN=LEFT>no sobra aclara que nuestro proyecto no es con fines de
+vandalismo ni cosas indebidas, es solo para fines educativos,
+cient&iacute;ficos y administrativos de en el &aacute;rea de la
+computaci&oacute;n., pues OHackSuite nos permite medir la seguridad
+en nuestros computadores personal y una red de computadores que
+administremos.   
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT>Sobre John The Ripper</P>
+<P ALIGN=LEFT>John the ripper es un famoso crackeador de passwords
+muy utilizado en el mundo hacking para descifrar password.</P>
+<P ALIGN=LEFT>John The ripper   Copyright (c) 1996-2006 by Solar
+Designer y Portions copyright (c) by their respective authors, y la
+versi&oacute;n original la puedes obtener en
+<A HREF="http://www.openwall.com/crypt/">http://www.openwall.com/crypt/</A>.</P>
+<P ALIGN=LEFT>Fue modificada bajo los t&eacute;rminos de la licencia
+GPL por Omar Andres Zapata Mesa para ser utilizada en la Suite,</P>
+<P ALIGN=LEFT>la versi&oacute;n modificada la puedes obterner de
+<A HREF="ftp://ohack.berlios.de/">ftp://ohack.berlios.de</A> .</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT>OjohnCore:</P>
+<P ALIGN=LEFT>En el plan de desarrollo de OjohnCore se pretende
+paralelizar el crackeo de passwords implementado las librerias MPICH,</P>
+<P ALIGN=LEFT>actualmente solo se le han hecho modificaciones menores
+como cambio de rutas de archivos de configuracion, Poner prioridad
+dentro del procesador “nice del sistema” el cual solo puede ser
+utilizado por el root o administrador del sistema entre otros, pero
+los mejores cambios esta por benir por ahora corre en secuancial.</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT>OjohnGui:</P>
+<P ALIGN=LEFT>Es una interfaz grafica que usuario desarrollada en c++
+con las librerias Qt4 de trolltech, basada en sesiones de usuario y
+de facil uso.</P>
+<P ALIGN=LEFT><IMG SRC="OJohnGui5.png" NAME="gr&aacute;ficos1" ALIGN=LEFT WIDTH=795 HEIGHT=573 BORDER=0><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT>Uso:</P>
+<P ALIGN=LEFT><IMG SRC="OJohnGui6.png" NAME="gr&aacute;ficos2" ALIGN=RIGHT WIDTH=356 HEIGHT=193 BORDER=0>En
+ la barra de menu en el item Inicio dar (Nueva sesion o Ctrl+N) y
+aparece un peque&ntilde;o dialogo que te pide el nombre para una
+nueva sesion pues en la que inicia es la que trae por defecto el john
+the ripper  llamada “john”.</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT>Una vez creada tu sesi&oacute;n hay que cargar los
+archivos a crackear y los diccionarios a usar seg&uacute;n sea el
+caso.</P>
+<P ALIGN=LEFT><IMG SRC="OJohnGui7.png" NAME="gr&aacute;ficos3" ALIGN=RIGHT WIDTH=373 HEIGHT=154 BORDER=0>para
+ello en el grupo de botones de archivos cleckeamos “Cargar
+Archivos” o su shortcut Ctrl+F donde aparece un peque&ntilde;o
+dialogo y cuando cargas el archivo el bot&oacute;n de deshabilita,
+pues solo se carga un shadow o archivo a cracker por sesi&oacute;n.
+Pro ahora el dialogo no ha sido totalmente desarrollado pues tendr&aacute;
+tambi&eacute;n la introducci&oacute;n de los archivos password y
+testiador de contenido ademas de unshadow.</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><IMG SRC="OJohnGui8.png" NAME="gr&aacute;ficos4" ALIGN=RIGHT WIDTH=383 HEIGHT=159 BORDER=0>Ahora
+vamos a ver las opciones b&aacute;sicas que se encuentran en el panel
+principal. El modo nos indica que tipo de ataque vamos a utilizar.</P>
+<P ALIGN=LEFT>Singular es un ataque de diccionario com&uacute;n, tu
+seleccionas esta y en el bot&oacute;n cargar diccionario cargas uno y
+listo.</P>
+<P ALIGN=LEFT>Incremental es un avance consecutivo y ordenado
+t&eacute;rminos seg&uacute;n se desee por ejemplo all utiliza todos
+los caracteres diponible, alpha utiliza solo letras , digits solo
+numeros y asi por el estilo. 
+</P>
+<P ALIGN=LEFT>Selecciona el tipo de encriptaci&oacute;n deseado o
+deja cualquiera para que el lo busque por si solo y el niver de
+salvar memoria que consiste en elegir un numero de 1-3 para que el
+john por ejemplo en tres se preocupa por el passwords pero no por el
+usuario. ejemplo de nivel 3 puede ser que nos de un password pero no
+el usuario al que pertenece.</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT>Informacion de la sesion:</P>
+<P ALIGN=LEFT><IMG SRC="OJohnGui9.png" NAME="gr&aacute;ficos5" ALIGN=RIGHT WIDTH=390 HEIGHT=71 BORDER=0>para
+obterner informaci&oacute;n de la sesi&oacute;n se cuenta con tres
+botones en el panel principal. Passwords muestra los passwords
+crackeados hasta el momento, datos muestra los datos cargados y
+limpiar, limpia el panel de informacion.</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT>Eejcucion:</P>
+<P ALIGN=LEFT><IMG SRC="OJohnGui10.png" NAME="gr&aacute;ficos6" ALIGN=RIGHT WIDTH=367 HEIGHT=76 BORDER=0>Para
+la ejecucion se cuenta con dos botones ejecutar y para que es lo
+basico ,pero cuando esta en ejecucion puedes detenerlo u despues
+continuar donde dejaste.</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+</BODY>
+</HTML>

@@ -1,0 +1,101 @@
+<ui version="4.0" >
+ <class>OSessionNameDialog</class>
+ <widget class="QDialog" name="OSessionNameDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>316</width>
+    <height>146</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item rowspan="3" row="0" column="0" >
+    <widget class="QLabel" name="label_2" >
+     <property name="text" >
+      <string/>
+     </property>
+     <property name="pixmap" >
+      <pixmap resource="OJohn.qrc" >:/home/andresete/WorkSpace/OHackSuite/OIcons/JOhnICons/BigO.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="2" >
+    <widget class="QLabel" name="label" >
+     <property name="font" >
+      <font>
+       <family>OStayPuft</family>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="layoutDirection" >
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text" >
+      <string>Nombre De La Sesion</string>
+     </property>
+     <property name="alignment" >
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="2" >
+    <widget class="QLineEdit" name="OSessionLineEdit" />
+   </item>
+   <item row="2" column="1" >
+    <widget class="QPushButton" name="OAcceptPushButton" >
+     <property name="text" >
+      <string>Aceptar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2" >
+    <widget class="QPushButton" name="OCancelPushButton" >
+     <property name="text" >
+      <string>Cancelar</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="OJohnSessionDia.qrc" />
+ </resources>
+ <connections>
+  <connection>
+   <sender>OCancelPushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OSessionNameDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>306</x>
+     <y>136</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>180</x>
+     <y>61</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>OSessionLineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>OAcceptPushButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>154</x>
+     <y>95</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>155</x>
+     <y>121</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

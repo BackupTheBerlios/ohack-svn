@@ -1,0 +1,20 @@
+--- /usr/portage/net-fs/ncpfs/ncpfs-2.2.6.ebuild	2006-01-28 00:05:54.000000000 -0600
++++ ncpfs-2.2.6.ebuild	2006-02-10 10:25:58.000000000 -0600
+@@ -13,6 +13,7 @@
+ SLOT="0"
+ LICENSE="GPL-2"
+ KEYWORDS="x86 ~amd64 ~ppc ppc64"
++IUSE="install-dev"
+ 
+ DEPEND="nls? ( sys-devel/gettext )
+ 		pam? ( sys-libs/pam )
+@@ -47,5 +48,9 @@
+ 	dodir /sbin
+ 	make DESTDIR=${D} install || die
+ 
++	if use install-dev; then
++		make DESTDIR=${D} install-dev || die
++	fi
++
+ 	dodoc FAQ README
+ }

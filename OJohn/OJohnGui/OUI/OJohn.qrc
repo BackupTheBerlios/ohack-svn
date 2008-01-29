@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/home/andresete/WorkSpace/OHackSuite/OIcons" >
+        <file>JOhnICons/!.png</file>
+        <file>JOhnICons/BigO.png</file>
+        <file>JOhnICons/E.png</file>
+        <file>JOhnICons/I.png</file>
+        <file>JOhnICons/N.png</file>
+        <file>JOhnICons/S.png</file>
+        <file>JOhnICons/T.png</file>
+        <file>JOhnICons/m.png</file>
+    </qresource>
+</RCC>

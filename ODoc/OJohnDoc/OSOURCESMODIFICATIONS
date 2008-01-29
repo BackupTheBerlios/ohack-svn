@@ -1,0 +1,21 @@
+/************************************/
+/*params.h fue el archivo modificado*/
+/************************************/
+
+ #define JOHN_SYSTEMWIDE_EXEC		"$OHACK/OBin/john"
+ #define JOHN_SYSTEMWIDE_HOME		"$OHACK/OJohnCore/OJohnConfig/"
+ #define JOHN_PRIVATE_HOME		"~/.OHack/OJohn/"
+ #define CFG_FULL_NAME			"$HOME/.OHACK/OJohn/john.conf"
+ #define CFG_ALT_NAME			"$HOME/.OHACK/OJohn/john.ini"
+ #if JOHN_SYSTEMWIDE
+ #define CFG_PRIVATE_FULL_NAME		JOHN_PRIVATE_HOME "/john.conf"
+ #define CFG_PRIVATE_ALT_NAME		JOHN_PRIVATE_HOME "/john.ini"
+ #define POT_NAME			JOHN_PRIVATE_HOME "/john.pot"
+ #define LOG_NAME			JOHN_PRIVATE_HOME "/john.log"
+ #define RECOVERY_NAME			JOHN_PRIVATE_HOME "/john.rec"
+ #else
+ #define POT_NAME			"$HOME/.OHACK/OJohn/OLog/john.pot"
+ #define LOG_NAME			"$HOME/.OHACK/OJohn/OLog/john.log"
+ #define RECOVERY_NAME			"$HOME/.OHACK/OJohn/OLog/john.rec"
+
+#define WORDLIST_NAME			"$HOME/.OHack/OJohn/ODictionaries/password.lst"

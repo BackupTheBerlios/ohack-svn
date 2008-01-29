@@ -1,0 +1,141 @@
+<ui version="4.0" >
+ <author>Omar Andres Zapata Mesa</author>
+ <class>OLoadFilesDialog</class>
+ <widget class="QDialog" name="OLoadFilesDialog" >
+  <property name="windowModality" >
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>333</width>
+    <height>107</height>
+   </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize" >
+   <size>
+    <width>16777212</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle" >
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QLabel" name="label" >
+     <property name="font" >
+      <font>
+       <family>OStayPuft</family>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text" >
+      <string>Archivo Shadow</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="2" >
+    <widget class="QLineEdit" name="OShadowLineEdit" >
+     <property name="dragEnabled" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3" >
+    <widget class="QToolButton" name="OGetFileToolButton" >
+     <property name="text" >
+      <string>...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4" >
+    <widget class="QPushButton" name="OLoadPushButton" >
+     <property name="text" >
+      <string>Cargar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3" >
+    <widget class="QCheckBox" name="OPasswordFileCheckBox" >
+     <property name="text" >
+      <string>Habilitar Archivo Password</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4" >
+    <widget class="QPushButton" name="OExitPushButton" >
+     <property name="text" >
+      <string>Cancelar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2" >
+    <widget class="QLabel" name="OPasswordFileLabel" >
+     <property name="font" >
+      <font>
+       <family>OStayPuft</family>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text" >
+      <string>Archivo Password</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2" >
+    <widget class="QLineEdit" name="OPasswordFileLineEdit" />
+   </item>
+   <item row="2" column="3" >
+    <widget class="QToolButton" name="OGetPasswordFileToolButton" >
+     <property name="text" >
+      <string>...</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <pixmapfunction>void OShadowArg(QString Shadow)</pixmapfunction>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>OShadowLineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>OLoadPushButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>215</x>
+     <y>13</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>232</x>
+     <y>49</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>OExitPushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OLoadFilesDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>153</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>3</x>
+     <y>24</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

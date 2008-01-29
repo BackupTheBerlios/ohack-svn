@@ -1,0 +1,60 @@
+<ui version="4.0" >
+ <class>OMessageDialog</class>
+ <widget class="QDialog" name="OMessageDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>153</width>
+    <height>75</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>OMessage</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" colspan="3" >
+    <widget class="QLabel" name="OMessageLabel" >
+     <property name="font" >
+      <font>
+       <family>Sans Serif</family>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text" >
+      <string/>
+     </property>
+     <property name="alignment" >
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" >
+    <widget class="QPushButton" name="pushButton" >
+     <property name="text" >
+      <string>Cerrar</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OMessageDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>105</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>46</x>
+     <y>126</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

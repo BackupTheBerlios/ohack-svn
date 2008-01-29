@@ -1,0 +1,114 @@
+<ui version="4.0" >
+ <class>OUsersDialog</class>
+ <widget class="QDialog" name="OUsersDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>221</width>
+    <height>217</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QLabel" name="label" >
+     <property name="text" >
+      <string>Nombre De Usuario</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" >
+    <widget class="QPushButton" name="pushButton" >
+     <property name="text" >
+      <string>Aceptar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QLineEdit" name="OUsersLineEdit" />
+   </item>
+   <item row="1" column="1" >
+    <widget class="QPushButton" name="OUsersAddPushButton" >
+     <property name="text" >
+      <string>Añadir</string>
+     </property>
+    </widget>
+   </item>
+   <item rowspan="3" row="2" column="0" >
+    <widget class="QTableView" name="OUsersTableView" >
+     <property name="layoutDirection" >
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="autoFillBackground" >
+      <bool>true</bool>
+     </property>
+     <property name="frameShape" >
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="sortingEnabled" >
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" >
+    <widget class="QPushButton" name="OUsersRemovePushButton" >
+     <property name="text" >
+      <string>Borrar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" >
+    <widget class="QPushButton" name="OCancelPushButton" >
+     <property name="text" >
+      <string>Cancelar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1" >
+    <widget class="QLabel" name="label_2" >
+     <property name="text" >
+      <string>Icono_Id</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>OUsersLineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>OUsersAddPushButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>83</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>186</x>
+     <y>49</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OUsersDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>185</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>218</x>
+     <y>21</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

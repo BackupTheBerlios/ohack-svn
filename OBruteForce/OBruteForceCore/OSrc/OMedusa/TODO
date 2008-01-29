@@ -1,0 +1,47 @@
+Future Plans:
+
+*Pool-based thread handling
+
+Threads are currently destroyed following the completion of a host
+or user test. Implementing a thread pool would likely decrease overall
+application overhead.
+
+*Add support for modules to request either the next password or user
+
+Currently, modules call getNextPass() which returns a valid password
+pointer until the user being tested password list has been exhausted.
+Once a user is done being tested, the testing thread is destroyed and
+a new thread is created for the next user. This should probably be 
+reworked to allow the module to switch users mid-brute force.
+
+*Ability to save state
+
+Medusa does not have the ability to stop or pause audits and later
+resume. This may be useful.
+
+*Account lockout
+
+Microsoft SMB services can often be queried for the account lockout
+policy or how many attempts are remaining on an account before it 
+is locked. Medusa should be able to auto-detect these values and 
+tested up to the lockout threshold.
+
+Bugs:
+
+Failed attempts could result in missed password attempts. Login modules
+have no method of notifying the server thread that an assigned password
+was not checked. Example issue: User kicks off 10 threads against a
+MS-SQL Developer Edition server. MSDE's workload governor limits the 
+service to no more than 5 concurrent connections. The result is 5 threads
+will fail to connect and shutdown. Medusa will continue testing with the
+remaining 5 threads. However, the 5 passwords initially assigned to those
+failed threads will not be tested. Not sure how to deal with this 
+situation yet...
+
+Solaris connect() periodically fails for unknown reason.
+
+SSH module may hang when connecting to protocol versions < 2 (e.g. 
+Cisco PIX). This appears to be a bug in libssh2. Planning to dig into
+it in the near future...
+
+

@@ -1,0 +1,140 @@
+<HTML>
+<TITLE>Foofus Networking Services - Medusa::SMBNT</TITLE>
+<BODY BGCOLOR="#999999">
+
+<H1>Medusa Parallel Network Login Auditor :: SMBNT</H1>
+<I>JoMo-Kun / jmk "AT" foofus "DOT" net</I><BR>
+<HR>
+
+<P>
+The SMBNT module tests accounts against the Microsoft <I>netbios-ssn</I> 
+(TCP/139) and <I>microsoft-ds</I> (TCP/445) services. Besides testing
+normal passwords, this module allows Medusa to directly test NTLM hashes 
+against a Windows host. This may be useful for an auditor who has aquired
+a sam._ or pwdump file and would like to quickly determine which are valid 
+entries.
+
+<P>
+Several "-m 'METHOD:VALUE'" options can be used with this module. The
+following are valid methods: GROUP, GROUP_OTHER, PASS and NETBIOS.
+The following values are useful for these methods:
+
+<BR><BR>
+<TABLE BORDER=1 CELLPADDING=10>
+<TR>
+  <TD><B>Method</B></TD>
+  <TD><B>Value</B></TD>
+  <TD><B>Description</B></TD>
+</TR>
+<TR>
+  <TD VALIGN=TOP ROWSPAN=3><I>GROUP</I></TD>
+  <TD VALIGN=TOP><I>LOCAL*</I></TD>
+  <TD>Check local account.</TD>
+</TR>
+<TR>
+  <TD VALIGN=TOP><I>DOMAIN</I></TD>
+  <TD>Check credentials against this hosts primary domain controller via this host.</TD>
+</TR>
+<TR>
+  <TD VALIGN=TOP><I>BOTH</I></TD>
+  <TD>Check both. This leaves the workgroup field set blank and then 
+      attempts to check the credentials against the host. If the account 
+      does not exist locally on the host being tested, that host then queries
+      its domain controller.</TD>
+</TR>
+<TR>
+  <TD VALIGN=TOP><I>GROUP_OTHER</I></TD>
+  <TD VALIGN=TOP><I>[user specified]</I></TD>
+  <TD>Configure arbitrary domain for host to authenticate against.</TD>
+</TR>
+<TR>
+  <TD VALIGN=TOP ROWSPAN=3><I>PASS</I></TD>
+  <TD VALIGN=TOP><I>PASSWORD*</I></TD>
+  <TD>Use a normal password.</TD>
+</TR>
+<TR>
+  <TD VALIGN=TOP><I>HASH</I></TD>
+  <TD>Use a NTLM hash rather than a password.</TD>
+</TR>
+<TR>
+  <TD VALIGN=TOP><I>MACHINE</I></TD>
+  <TD>Use the Machine's NetBIOS name as the password.</TD>
+</TR>
+<TR>
+  <TD VALIGN=TOP><I>NETBIOS</I></TD>
+  <TD VALIGN=TOP><I></I></TD>
+  <TD>Force NetBIOS Mode (Disable Native Win2000 Mode)</TD>
+</TR>
+</TABLE>
+&nbsp&nbsp(*) Default value
+
+<P>
+The following examples demonstrate several uses of the SMBNT module:
+
+<UL>
+<LI>The default behavior is to test NATIVE Win2000 mode via TCP/445. If this 
+connection fails, NETBIOS mode is checked on TCP/139. The following shows how 
+to force the module into NETBIOS module. 
+
+<PRE><CODE>
+% medusa -h 192.168.0.20 -u administrator -e ns -M smbnt -m NETBIOS -n 139 
+Medusa v1.0-rc1 [http://www.foofus.net] (C) JoMo-Kun / Foofus Networks
+
+ACCOUNT CHECK: [smbnt] Host: 192.168.0.20 (1/1) User: administrator (1/1) Password:  (1/2)
+ACCOUNT CHECK: [smbnt] Host: 192.168.0.20 (1/1) User: administrator (1/1) Password: administrator (2/2)
+</PRE></CODE>
+
+<LI>The following example shows how to force to module to set a domain value
+other than either "localhost" or the system's default domain. This can be useful
+when testing trust relationships between domains.
+
+<PRE><CODE>
+% medusa -h 192.168.0.20 -u foo -p bar -M smbnt -m GROUP_OTHER:FOODOM
+Medusa v1.0-rc1 [http://www.foofus.net] (C) JoMo-Kun / Foofus Networks 
+
+ACCOUNT CHECK: [smbnt] Host: 192.168.0.20 (1/1) User: foo (1/1) Password: bar (1/1)
+</PRE></CODE>
+
+<LI>This example demonstrates one way that PwDump output could be used with
+Medusa. Each user and their respective NTLM hash within the pwdump.txt file
+will be tested against the hosts listed in hosts.txt.<BR>
+
+<PRE><CODE>
+% medusa -H hosts.txt -C pwdump.txt -M smbnt -m PASS:HASH
+
+Medusa v1.0-rc1 [http://www.foofus.net] (C) JoMo-Kun / Foofus Networks
+
+ACCOUNT CHECK: [smbnt] Host: 192.168.0.20 (1/10) User: Administrator (1/3) Password: 92D887C8010492C2944E2DF489A880E4:7A2EDE4F51BC5A03984C6BA2C239CF63::: (1/1)
+ACCOUNT FOUND: [smbnt] Host: 192.168.0.20 User: Administrator Password: 92D887C8010492C2944E2DF489A880E4:7A2EDE4F51BC5A03984C6BA2C239CF63::: [SUCCESS]
+ACCOUNT CHECK: [smbnt] Host: 192.168.0.20 (1/10) User: bar (2/3) Password: 49D58563113416EBAAD3B435B51404EE:AA3AFE73B6E0C2D87B3A428BF696AE71::: (1/1)
+ACCOUNT CHECK: [smbnt] Host: 192.168.0.20 (1/10) User: foo (3/3) Password: 92D887C8010492C2944E2DF489A880E4:7A2EDE4F51BC5A03984C6BA2C239CF63::: (1/1)
+ACCOUNT FOUND: [smbnt] Host: 192.168.0.20 User: foo Password: 92D887C8010492C2944E2DF489A880E4:7A2EDE4F51BC5A03984C6BA2C239CF63::: [SUCCESS]
+&lt snip &gt
+</PRE></CODE>
+
+It should be noted that once a valid hash is located, it is often not necessary
+to "crack" the password in order to use it. Using a modified SAMBA client, the
+hash can just be "passed" directly. See <A HREF="http://www.foofus.net/jmk/passhash.html">
+this page</A> for a SAMBA patch and several examples.
+
+</UL>
+
+<P>
+Be careful of mass domain account lockout with this module. For example, assume 
+you are checking several accounts against many domain workstations. If you are 
+using either the "GROUP:DOMAIN" or the "GROUP:BOTH" option and these accounts do 
+not exist locally on the workstations, each workstation will in turn check their
+respective domain controller. This could cause a bunch of lockouts. Of course, 
+it'd look like the workstations, not you, were doing it. ;)
+
+<P>
+FYI, this code is unable to test accounts on default XP hosts which are not part 
+of a domain and do not have normal file sharing enabled. Default XP does not allow 
+shares and returns STATUS_LOGON_FAILED for both valid and invalid credentials. XP 
+with simple sharing enabled returns SUCCESS for both valid and invalid credentials. 
+If anyone knows a way to test in these configurations...
+
+<BR><BR>
+<A HREF="medusa.html">Medusa Documentation</A><BR>
+</BODY>
+<HTML>
