@@ -66,7 +66,7 @@ BENCH_OBJS = \
 	bench.o best.o common.o config.o formats.o math.o memory.o miscnl.o \
 	params.o path.o signals.o tty.o
 
-PROJ = ../run/libojohn.so
+PROJ = ../run/john ../run/unshadow ../run/unafs ../run/unique
 PROJ_DOS = ../run/john.bin ../run/john.com \
 	../run/unshadow.com ../run/unafs.com ../run/unique.com
 PROJ_WIN32 = ../run/john.exe \
@@ -653,60 +653,59 @@ generic.h:
 		"$(BENCH_MD5_OBJS_DEPEND)" \
 		"$(BENCH_BF_OBJS_DEPEND)"
 
-bench:  $(BENCH_OBJS) linux-x86-any
-#	$(LD) $(LDFLAGS) $(BENCH_OBJS) -o bench
-../run/libojohn.so: $(JOHN_OBJS)
-	$(CC) -fPIC -shared $(JOHN_OBJS) -o ../run/libojohn.so
-# ../run/john: $(JOHN_OBJS)
-# 	$(LD) $(LDFLAGS) $(JOHN_OBJS) -o ../run/john
+bench: $(BENCH_OBJS)
+	$(LD) $(LDFLAGS) $(BENCH_OBJS) -o bench
 
-# ../run/unshadow: ../run/john
-# 	$(RM) ../run/unshadow
-# 	ln -s john ../run/unshadow
-# 
-# ../run/unafs: ../run/john
-# 	$(RM) ../run/unafs
-# 	ln -s john ../run/unafs
-# 
-# ../run/unique: ../run/john
-# 	$(RM) ../run/unique
-# 	ln -s john ../run/unique
-# 
-# ../run/john.bin: $(JOHN_OBJS)
-# 	$(LD) $(LDFLAGS) $(JOHN_OBJS) -o ../run/john.exe
-# 	if exist ..\run\john.bin del ..\run\john.bin
-# 	ren ..\run\john.exe john.bin
-# 
-# ../run/john.com: john.com
-# 	copy john.com ..\run\john.com
-# 
-# ../run/unshadow.com: john.com
-# 	copy john.com ..\run\unshadow.com
-# 
-# ../run/unafs.com: john.com
-# 	copy john.com ..\run\unafs.com
-# 
-# ../run/unique.com: john.com
-# 	copy john.com ..\run\unique.com
-# 
-# john.com: john.asm
-# 	@echo Use Borland TASM/TLINK to make JOHN.COM
-# 
-# ../run/john.exe: $(JOHN_OBJS)
-# 	$(LD) $(JOHN_OBJS) -lkernel32 -o ../run/john.exe
-# 	strip ../run/john.exe
-# 
-# ../run/unshadow.exe: symlink.c
-# 	$(CC) symlink.c -o ../run/unshadow.exe
-# 	strip ../run/unshadow.exe
-# 
-# ../run/unafs.exe: symlink.c
-# 	$(CC) symlink.c -o ../run/unafs.exe
-# 	strip ../run/unafs.exe
-# 
-# ../run/unique.exe: symlink.c
-# 	$(CC) symlink.c -o ../run/unique.exe
-# 	strip ../run/unique.exe
+../run/john: $(JOHN_OBJS)
+	$(LD) $(LDFLAGS) $(JOHN_OBJS) -o ../run/john
+
+../run/unshadow: ../run/john
+	$(RM) ../run/unshadow
+	ln -s john ../run/unshadow
+
+../run/unafs: ../run/john
+	$(RM) ../run/unafs
+	ln -s john ../run/unafs
+
+../run/unique: ../run/john
+	$(RM) ../run/unique
+	ln -s john ../run/unique
+
+../run/john.bin: $(JOHN_OBJS)
+	$(LD) $(LDFLAGS) $(JOHN_OBJS) -o ../run/john.exe
+	if exist ..\run\john.bin del ..\run\john.bin
+	ren ..\run\john.exe john.bin
+
+../run/john.com: john.com
+	copy john.com ..\run\john.com
+
+../run/unshadow.com: john.com
+	copy john.com ..\run\unshadow.com
+
+../run/unafs.com: john.com
+	copy john.com ..\run\unafs.com
+
+../run/unique.com: john.com
+	copy john.com ..\run\unique.com
+
+john.com: john.asm
+	@echo Use Borland TASM/TLINK to make JOHN.COM
+
+../run/john.exe: $(JOHN_OBJS)
+	$(LD) $(JOHN_OBJS) -lkernel32 -o ../run/john.exe
+	strip ../run/john.exe
+
+../run/unshadow.exe: symlink.c
+	$(CC) symlink.c -o ../run/unshadow.exe
+	strip ../run/unshadow.exe
+
+../run/unafs.exe: symlink.c
+	$(CC) symlink.c -o ../run/unafs.exe
+	strip ../run/unafs.exe
+
+../run/unique.exe: symlink.c
+	$(CC) symlink.c -o ../run/unique.exe
+	strip ../run/unique.exe
 
 # Inlining the S-boxes produces faster code, as long as they fit in the cache
 # (that is, on RISC with at least 8 KB of L1 code cache).

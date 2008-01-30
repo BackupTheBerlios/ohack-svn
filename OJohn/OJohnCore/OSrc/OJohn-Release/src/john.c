@@ -312,7 +312,7 @@ static void john_done(void)
 	check_abort(0);
 }
 
-int main(int argc, char **argv)
+int OJohn(int argc, char **argv)
 {
 	char *name;
 	/*Omar modifications*/

@@ -1,6 +1,10 @@
 #include<OJohnGui.h>
 #include<QtCore>
 
+#include<OJohn.h>
+
+
+
 int main(int argc,char *argv[])
 {
 	QString OShadowFile;
