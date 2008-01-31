@@ -2,7 +2,7 @@
 # This file is part of John the Ripper password cracker,
 # Copyright (c) 1996-2006 by Solar Designer
 #
-
+AR = ar -rc 
 CPP = gcc
 CC = gcc
 AS = gcc
@@ -657,6 +657,7 @@ bench:  $(BENCH_OBJS) linux-x86-any
 #	$(LD) $(LDFLAGS) $(BENCH_OBJS) -o bench
 ../run/libojohn.so: $(JOHN_OBJS)
 	$(CC) -fPIC -shared $(JOHN_OBJS) -o ../run/libojohn.so
+	$(AR) ../run/libojohn.a $(JOHN_OBJS) 
 # ../run/john: $(JOHN_OBJS)
 # 	$(LD) $(LDFLAGS) $(JOHN_OBJS) -o ../run/john
 
