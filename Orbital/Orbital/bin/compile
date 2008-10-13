@@ -13,7 +13,7 @@ import sys, os, string
 
 #variables 
 GCC="g++ "
-CFLAGS=" -c -I/usr/local/Orbital/cspice/include -I/usr/local/Orbital/gsl/include -I/usr/local/Orbital/Pigsl/include"
+CFLAGS=" -c -I/usr/local/Orbital/cspice/include -I/usr/local/Orbital/gsl/include -I/usr/local/Orbital/Pigsl/include -I/usr/local/Orbital/include"
 LFLAGS=" /usr/local/Orbital/PIgsl/lib/libpigsl.a -lgsl -lgslcblas /usr/local/Orbital/cspice/lib/cspice.a /usr/local/Orbital/cspice/lib/csupport.a -lm "
 
 #funcion de ayuda

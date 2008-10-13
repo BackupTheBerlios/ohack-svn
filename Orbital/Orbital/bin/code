@@ -49,14 +49,36 @@ def putCode(code):
 def listCode():
 	
 	os.system("svn ls svn+ssh://andresete@svn.berlios.de/svnroot/repos/ohack/Orbital")
+
+def updateCode():
+	os.system("svn update")
+
+def commitCode():
+	os.system("svn ci")
+
 #def main():
 connect()
-if len(sys.argv) == 2 and sys.argv[1]=="get":
-	getCode(sys.argv[2])
+if sys.argv[1]=="get":
+	try:
+		getCode(sys.argv[2])
+	except:
+		print "falta el segundo argumento ej:  code get \"program-from-repo\""
+	
+if sys.argv[1]=="put":
+	try:
+		putCode(sys.argv[2])
+	except:
+		print "falta el segundo argumento ej: code put \"program-for-put-in-repo\""
+		
 if sys.argv[1]=="list":
 	listCode()
-if len(sys.argv) == 2 and sys.argv[1]=="put":
-	putCode(sys.argv[2])
+
+if sys.argv[1]=="update":
+	updateCode()
+	
+if sys.argv[1]=="commit":
+	commitCode()
+
 disconnect()
 
 #main()
