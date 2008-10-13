@@ -13,8 +13,8 @@ import sys, os, string
 
 #variables 
 GCC="g++ "
-CFLAGS=" -c -I/usr/local/cspice/include "
-LFLAGS=" -lgsl -lgslcblas /usr/local/cspice/lib/cspice.a /usr/local/cspice/lib/csupport.a -lm -lpigs "
+CFLAGS=" -c -I/usr/local/Orbital/cspice/include -I/usr/local/Orbital/gsl/include -I/usr/local/Orbital/Pigsl/include"
+LFLAGS=" /usr/local/Orbital/PIgsl/lib/libpigsl.a -lgsl -lgslcblas /usr/local/Orbital/cspice/lib/cspice.a /usr/local/Orbital/cspice/lib/csupport.a -lm "
 
 #funcion de ayuda
 #parametro mode que puede ser "basic": como se usa compile "code": falta el archivo fuente
