@@ -41,14 +41,17 @@ def disconnect():
 
 #sirve para obtener codigo de repo
 def getCode(code):
-	os.system("svn co svn+ssh://andresete@svn.berlios.de/svnroot/repos/ohack/Orbital"+code)
+	os.system("svn co 
+svn+ssh://andresete@svn.berlios.de/svnroot/repos/ohack/Orbital/"+code)
 	
 def putCode(code):
-	os.system("svn import "+code+" svn+ssh://andresete@svn.berlios.de/svnroot/repos/ohack/Orbital")
+	os.system("svn import "+code+" 
+svn+ssh://andresete@svn.berlios.de/svnroot/repos/ohack/Orbital/")
 	
 def listCode():
 	
-	os.system("svn ls svn+ssh://andresete@svn.berlios.de/svnroot/repos/ohack/Orbital")
+	os.system("svn ls 
+svn+ssh://andresete@svn.berlios.de/svnroot/repos/ohack/Orbital/")
 
 def updateCode():
 	os.system("svn update")
