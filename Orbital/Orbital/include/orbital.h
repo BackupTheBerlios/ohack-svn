@@ -1,7 +1,7 @@
 #ifndef ORBITAL_H
 #define ORBITAL_h
 /*pigsl library*/
-#include<pigsl.h>
+#include<PxMonteCarlo.h>
 /*std libs*/
 #include<stdio.h>
 #include<math.h>
