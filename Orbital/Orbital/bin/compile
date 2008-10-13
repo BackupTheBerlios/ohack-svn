@@ -1,0 +1,76 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#############################################################
+# Copyright Omar Andrés Zapata Mesa 			    #
+# Herramienta de compilacion para Curso de Mecanica Orbital #
+# Profesores Jorge Zuluaga y Ricardo Restrepo		    #
+# Universidad de Antioquia 2008				    #
+# para Gnu/Linux bajo licencia Gpl 3			    #
+#############################################################
+
+
+import sys, os, string
+
+#variables 
+GCC="g++ "
+CFLAGS=" -c -I/usr/local/cspice/include "
+LFLAGS=" -lgsl -lgslcblas /usr/local/cspice/lib/cspice.a /usr/local/cspice/lib/csupport.a -lm -lpigs "
+
+#funcion de ayuda
+#parametro mode que puede ser "basic": como se usa compile "code": falta el archivo fuente
+def help(mode):
+  #mode de usar basico de compile
+  if mode=="basic":
+    print "\n============================================="
+    print "Ayuda de Compilacion basica"
+    print "compile programa.c \ngenera la salida programa"
+    print "compile -e programa.c \nsi compila bien, ejecuta la salida ./program"
+    print "============================================="
+    sys.exit(1);
+  #falta el archivo a compilar
+  if mode=="code":
+    print "\n============================================="
+    print "Falta el archivo a compilar"
+    print "============================================="
+    sys.exit(1)
+
+
+#funcion de compilacion
+#parametro code = archivo a compilar
+def compile(code):
+#miramos que tenga la extension .c o .cpp para pasarle el archivo al compilador
+  if code[len(code)-2:len(code)]!=".c":# or code[4:0]!=".cpp":
+    print "Erro: No es un archivo de c/c++"
+    print "no termina en "+code[len(code)-2:len(code)]
+    sys.exit(1)
+  else:
+    print "Compiling....."
+    os.system(GCC+CFLAGS+code+" -o "+code[:len(code)-2]+".o")
+    os.system(GCC+LFLAGS+code[:len(code)-2]+".o"+LFLAGS+" -o "+code[:len(code)-2])
+    os.unlink(code[:len(code)-2]+".o")
+  
+
+
+
+try:
+  #opcion en linea de comando
+  CmdOption=sys.argv[1]
+except:
+  help("basic")
+
+#opcion de linea de comando -c ejecuta el ouput de gcc
+if CmdOption=="-e":
+  try:
+    code=sys.argv[2]
+  except:
+    help("code")
+  #limpia elejecutable anterior en casod e existir
+  os.system("rm -rf "+code[:len(code)-2])
+  compile(code)
+  #mira si la compilacion fue correcta y genero el ejecutable
+  if os.access(code[:len(code)-2],os.F_OK):
+    os.system("./"+code[:len(code)-2])
+
+#opcion de solo compilar y enlazar, no ejecuta
+if CmdOption!="-e":
+    compile(CmdOption)
