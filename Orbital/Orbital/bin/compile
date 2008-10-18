@@ -11,9 +11,9 @@
 
 import sys, os, string
 
-#variables 
+#variables #recordar dejar espacios al final bug fixed
 GCC="g++ "
-CFLAGS=" -c -I/usr/local/Orbital/cspice/include -I/usr/local/Orbital/gsl/include -I/usr/local/Orbital/Pigsl/include -I/usr/local/Orbital/include"
+CFLAGS=" -c -I/usr/local/Orbital/cspice/include -I/usr/local/Orbital/gsl/include -I/usr/local/Orbital/Pigsl/include -I/usr/local/Orbital/include "
 LFLAGS=" /usr/local/Orbital/PIgsl/lib/libpigsl.a -lgsl -lgslcblas /usr/local/Orbital/cspice/lib/cspice.a /usr/local/Orbital/cspice/lib/csupport.a -lm "
 
 #funcion de ayuda
@@ -21,11 +21,11 @@ LFLAGS=" /usr/local/Orbital/PIgsl/lib/libpigsl.a -lgsl -lgslcblas /usr/local/Orb
 def help(mode):
   #mode de usar basico de compile
   if mode=="basic":
-    print "\n============================================="
+    print "\n=================================================================="
     print "Ayuda de Compilacion basica"
     print "compile programa.c \ngenera la salida programa"
     print "compile -e programa.c \nsi compila bien, ejecuta la salida ./program"
-    print "============================================="
+    print "==================================================================="
     sys.exit(1);
   #falta el archivo a compilar
   if mode=="code":
@@ -44,11 +44,11 @@ def compile(code):
     print "no termina en "+code[len(code)-2:len(code)]
     sys.exit(1)
   else:
-    print "Compiling....."
+    print "Compiling.....",code
+    print GCC+CFLAGS+code+" -o "+code[:len(code)-2]+".o"
     os.system(GCC+CFLAGS+code+" -o "+code[:len(code)-2]+".o")
     os.system(GCC+LFLAGS+code[:len(code)-2]+".o"+LFLAGS+" -o "+code[:len(code)-2])
     os.unlink(code[:len(code)-2]+".o")
-  
 
 
 
@@ -73,4 +73,4 @@ if CmdOption=="-e":
 
 #opcion de solo compilar y enlazar, no ejecuta
 if CmdOption!="-e":
-    compile(CmdOption)
+	compile(CmdOption)
