@@ -44,11 +44,15 @@ def compile(code):
     print "no termina en "+code[len(code)-2:len(code)]
     sys.exit(1)
   else:
-    print "Compiling.....",code
-    print GCC+CFLAGS+code+" -o "+code[:len(code)-2]+".o"
+    print "Compiling....."
+    #print GCC+CFLAGS+code+" -o "+code[:len(code)-2]+".o"
     os.system(GCC+CFLAGS+code+" -o "+code[:len(code)-2]+".o")
-    os.system(GCC+LFLAGS+code[:len(code)-2]+".o"+LFLAGS+" -o "+code[:len(code)-2])
-    os.unlink(code[:len(code)-2]+".o")
+    #si compilo el codigo objeto, osea que se genero el .o
+    if os.access(code[:len(code)-2]+".o",os.F_OK):
+	print "Linking....."
+    	os.system(GCC+LFLAGS+code[:len(code)-2]+".o"+LFLAGS+" -o "+code[:len(code)-2])
+    	os.unlink(code[:len(code)-2]+".o")
+    
 
 
 
