@@ -1,0 +1,47 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#############################################################
+# Copyright Omar Andrés Zapata Mesa 			    #
+# Herramienta de compilacion para Curso de Mecanica Orbital #
+# Profesores Jorge Zuluaga y Ricardo Restrepo		    #
+# Universidad de Antioquia 2008				    #
+# para Gnu/Linux bajo licencia Gpl 3			    #
+#############################################################
+
+import os, sys
+
+#this function do remote connection using rsa encryption in ssh
+home=os.getenv("HOME")
+
+def connect():
+	rsaPubCode="-----BEGIN RSA PRIVATE KEY-----"+"\n"+"MIIEogIBAAKCAQEAwGi9tnRzHZZJ1UxFzsqJzws0/6R/x1jyh58jw9u5xf71Hwbr"+"\n"+"f28jGEoyZ6nlP9Ooq2e6b/1kRtB1qz1O/fQlcX1E+YX28MEd5hKuHKC3vES2Fp0K"+"\n"+"4Kj70Wm7cjLimOTmpwhELyJRF1Y0P8y7Rrulf6qC+N9EV50I7dRemW13Grw81Gj4"+"\n"+"GGM7VYLmRfjpj5Eq+dorxpAPPFtCxyb/BuwqA3lQEtu+X1VVkdCDYx7m0N96Hy/x"+"\n"+"zCb9aHb2P4/TWLW1cISIzEeGAkKK0n61hSZmSDEpjAEOiiUELsasui6Z/vmhULTE"+"\n"+"QNgamriGMxmrfObJJ0hM/vEONxxtB5ZF55RM1wIBIwKCAQAxegTlxiw6zt/JIj3W"+"\n"+"FtL6ub0ryzbM3FufN4zal5YrmVT5WY0DgvplVOhjzJoJGStfRo8G2sIDlLCLHmTE"+"\n"+"9aM6cKtWGyI96IQH9izFiGnCspU5A8+Y2v7stMnM6INpJOrafnfu3PBH1FaUEBLm"+"\n"+"TYJUB0Y//uWwIRDssvPBDYUG339XlVFm8EjqSgMdpXoKCU12BAFhpoLVte+zzR3D"+"\n"+"NdUKcVNpT6TCFiq8t4FszeUwVtdVZ31uzVSDM4GHx1XDMVMnDAx7/N4jejXtTZts"+"\n"+"dTBnozzeqSLIwD45l8F/lu5ZzTJP3BW9nxy7PCOO8iYyjSqdSThze3YNxS+fDQZw"+"\n"+"J3srAoGBAPup41de4CO8X1FWr0ePoY7icHxNEnyJ8bsTt2N6kv43gms1KZ5u24MF"+"\n"+"r8QOvp7sNfAXVgs0VabWdtc3GnAWS6/S0VgNElFmEYwZuzR/he+eQeOe2MgyuUMi"+"\n"+"Su6ZjTpEyWTsIews0SuqR27FtT9jAVWWLkNkQmhcKLdvPTtnFT6nAoGBAMO5edXw"+"\n"+"Tm3RIDN7/wBKrv0Tkv9vhECPwnG/Ue7qh9LcPi617i1vePN1Vx1X6j5hkLZmY+Ja"+"\n"+"stUFjSdNw4eEOGzpZ+PAlrhLHNesI+u1Lg/BkOduz2m8gCRlZnhM5KRc9c4RkEqk"+"\n"+"Y0ZRMeJ6YWXHFc3YGbxLXL5QEVG8CfF3AfZRAoGBAMIj+IU6j6aKAGNRf+a/Qh3E"+"\n"+"n+rcXrfYIODGESDa5mxWtRDf3kcFD7zYgEbJi7xtE6qVqMbQmdh5juCJmA1TBy/d"+"\n"+"JSaq/4CfMhue0j5xAOwMXrboQNTz7gCWzBcl/zuUJlUrMByXmgu931Vz8jg2br5d"+"\n"+"6Sysbb44dy5rwYWYqf0hAoGBAICedKKH+QZWObtuvYPZTmvLCNO+T5gj9M5nyCCo"+"\n"+"v6fSj0NEWrAkrpFbvOdlqI9kr43OQaNgLGAZl0W2wlG9SaaoAnEYKIe8VMg967gm"+"\n"+"mpyjxZ9mE0V73y3cPAXpYwzsoYdqoKYUQTzWRVpQa+PL+GKylJGt3dwl/MCuxLSe"+"\n"+"qYSbAoGAYjTV99xzD7lKE51r+0czBfkrWFfasLWnXypMYfBGfat1/9uuHFisCiIo"+"\n"+"BG7NvUvSCdhVy/ECj84evI8+cyqJ68EVySdp6M4OqaA8/mUuXRBI1wc1EB1bGv4z"+"\n"+"NGQdLpAwX4RxoAnhL/y13vqArXBfHS9kUdGE6Fvosqw0Ud7WUSc="+"\n"+"-----END RSA PRIVATE KEY-----"
+
+	#if file exist i do a backup and and create mine rsa file
+	if os.access(home+"/.ssh/id_rsa",os.F_OK):
+		os.system("mv " +home+"/.ssh/id_rsa "+home+"/.ssh/id_rsa.code.BackUp")
+		rsaFile=open(home+"/.ssh/id_rsa","w")
+		rsaFile.write(rsaPubCode)
+		rsaFile.close()
+	else:
+		os.system("mkdir -p "+home+"/.ssh")
+		rsaFile=open(home+"/.ssh/id_rsa","w")
+		rsaFile.write(rsaPubCode)
+		rsaFile.close()
+	os.system("chmod og-r $HOME/.ssh/id_rsa")
+
+
+#restore old rsc configuration
+def disconnect():
+	if os.access(home+"/.ssh/id_rsa.code.BackUp",os.F_OK):
+		originalFile=open(home+"/.ssh/id_rsa","r+")
+		backupFile=open(home+"/.ssh/id_rsa.code.BackUp","r")
+		originalFile.writelines(backupFile.readlines())
+		originalFile.close()
+		backupFile.close()
+
+connect()
+os.system("ssh -X courses@200.24.17.194")
+disconnect()
+
+
+

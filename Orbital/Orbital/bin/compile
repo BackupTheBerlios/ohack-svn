@@ -38,8 +38,21 @@ def help(mode):
 #funcion de compilacion
 #parametro code = archivo a compilar
 def compile(code):
-  #object code
-  ocode=""
+  #object ocode is file.c after is file.o and last file
+  i=0
+  while True:
+	i=i-1
+	if code[len(code[:i-1]):i]=="/": break
+	if code[len(code[:i-1]):i]=="":break
+
+  ocode=code[len(code[:i]):len(code)]
+  if os.getenv("COMPILEDEBUG")=="TRUE":
+	print "==========================Compiling Debug=========================="
+	print "funtion compile arguments = "+code
+	print "file to compile = "+ocode
+	print "dir of compile call = "+os.getcwd()
+	print "=======================Compiling Debug End========================="
+  #sys.exit(1)
 #miramos que tenga la extension .c o .cpp para pasarle el archivo al compilador
   if code[len(code)-2:len(code)]!=".c" and code[len(code)-4:len(code)]!=".cpp":
     print "Erro: No es un archivo de c/c++"
@@ -47,21 +60,32 @@ def compile(code):
     sys.exit(1)
   else:
     print "Compiling....."
-    
     #mira la extension para quitarla y generar el codigo objeto
-    if code[len(code)-2:len(code)]==".c":
-	ocode=code[:len(code)-2]+".o"
-    	os.system(GCC+CFLAGS+code+" -o "+ocode)
+    if ocode[len(ocode)-2:len(code)]==".c":
+	ocode=ocode[:len(ocode)-2]+".o"
+	if os.getenv("COMPILEDEBUG")=="TRUE":
+		print "==========================Compiling Debug=========================="
+		print GCC+CFLAGS+code+" -o "+os.getcwd()+"/"+ocode
+    		print "=======================Compiling Debug End========================="
+	os.system(GCC+CFLAGS+code+" -o "+os.getcwd()+"/"+ocode)
     if code[len(code)-4:len(code)]==".cpp":
-	ocode=code[:len(code)-4]+".o"
-	os.system(GCC+CFLAGS+code+" -o "+ocode)
-    
+	ocode=ocode[:len(ocode)-4]+".o"
+	if os.getenv("COMPILEDEBUG")=="TRUE":
+		print "==========================Compiling Debug=========================="
+		print GCC+CFLAGS+code+" -o "+os.getcwd()+"/"+ocode
+		print "=======================Compiling Debug End========================="
+	os.system(GCC+CFLAGS+code+" -o "+os.getcwd()+"/"+ocode)
+    #sys.exit(1)
     #si compilo el codigo objeto, osea que se genero el .o
-    if os.access(ocode,os.F_OK):
+    if os.access(os.getcwd()+"/"+ocode,os.F_OK):
 	print "Linking....."
-    	os.system(GCC+LFLAGS+ocode+LFLAGS+" -o "+ocode[:len(code)-2])
-    	os.unlink(ocode)
-	os.system("cp -rf "+ocode[:len(code)-2]+" $(pwd) ")
+	if os.getenv("COMPILEDEBUG")=="TRUE":
+		print "==========================Linking Debug============================"
+		print GCC+LFLAGS+os.getcwd()+"/"+ocode+LFLAGS+" -o "+os.getcwd()+"/"+ocode[:len(ocode)-2]
+		print "========================Linking Debug End=========================="
+    	os.system(GCC+LFLAGS+os.getcwd()+"/"+ocode+LFLAGS+" -o "+os.getcwd()+"/"+ocode[:len(ocode)-2])
+    	os.unlink(os.getcwd()+"/"+ocode)
+	
     
 
 
@@ -83,7 +107,7 @@ if CmdOption=="-e":
   compile(code)
   #mira si la compilacion fue correcta y genero el ejecutable
   if os.access(code[:len(code)-2],os.F_OK):
-    os.system("./"+code[:len(code)-2])
+    os.system("./"+ocode[:len(ocode)-2])
 
 #opcion de solo compilar y enlazar, no ejecuta
 if CmdOption!="-e":
