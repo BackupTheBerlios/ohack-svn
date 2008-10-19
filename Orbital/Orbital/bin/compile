@@ -38,20 +38,30 @@ def help(mode):
 #funcion de compilacion
 #parametro code = archivo a compilar
 def compile(code):
+  #object code
+  ocode=""
 #miramos que tenga la extension .c o .cpp para pasarle el archivo al compilador
-  if code[len(code)-2:len(code)]!=".c":# or code[4:0]!=".cpp":
+  if code[len(code)-2:len(code)]!=".c" and code[len(code)-4:len(code)]!=".cpp":
     print "Erro: No es un archivo de c/c++"
-    print "no termina en "+code[len(code)-2:len(code)]
+    print "no termina en .c .cpp"
     sys.exit(1)
   else:
     print "Compiling....."
-    #print GCC+CFLAGS+code+" -o "+code[:len(code)-2]+".o"
-    os.system(GCC+CFLAGS+code+" -o "+code[:len(code)-2]+".o")
+    
+    #mira la extension para quitarla y generar el codigo objeto
+    if code[len(code)-2:len(code)]==".c":
+	ocode=code[:len(code)-2]+".o"
+    	os.system(GCC+CFLAGS+code+" -o "+ocode)
+    if code[len(code)-4:len(code)]==".cpp":
+	ocode=code[:len(code)-4]+".o"
+	os.system(GCC+CFLAGS+code+" -o "+ocode)
+    
     #si compilo el codigo objeto, osea que se genero el .o
-    if os.access(code[:len(code)-2]+".o",os.F_OK):
+    if os.access(ocode,os.F_OK):
 	print "Linking....."
-    	os.system(GCC+LFLAGS+code[:len(code)-2]+".o"+LFLAGS+" -o "+code[:len(code)-2])
-    	os.unlink(code[:len(code)-2]+".o")
+    	os.system(GCC+LFLAGS+ocode+LFLAGS+" -o "+ocode[:len(code)-2])
+    	os.unlink(ocode)
+	os.system("cp -rf "+ocode[:len(code)-2]+" $(pwd) ")
     
 
 
